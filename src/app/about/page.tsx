@@ -22,7 +22,7 @@ export default function AboutPage() {
           <CardContent className="p-6 md:p-8">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <Avatar className="w-32 h-32 md:w-48 md:h-48 border-4 border-primary">
-                <AvatarImage src="https://picsum.photos/seed/avatar/200/200" alt="ABHINAV GURIJALA" data-ai-hint="professional portrait" />
+                <AvatarImage src="https://firebasestorage.googleapis.com/v0/b/teams-ai-test-project.appspot.com/o/studio%2Fstuidio-user-cc-icon-46543-1.png?alt=media&token=8660e513-3976-4be6-a197-2a4c8a29b019" alt="ABHINAV GURIJALA" data-ai-hint="professional portrait" />
                 <AvatarFallback>
                   <User className="w-16 h-16" />
                 </AvatarFallback>
@@ -37,7 +37,7 @@ export default function AboutPage() {
                 </p>
                 <div className="mt-6 flex justify-center md:justify-start gap-4">
                   <Button asChild variant="outline" size="icon">
-                    <Link href="#" aria-label="GitHub Profile">
+                    <Link href="https://github.com/abhi96522-ai" aria-label="GitHub Profile">
                       <Github className="h-5 w-5" />
                     </Link>
                   </Button>
@@ -83,7 +83,7 @@ export default function AboutPage() {
               <CardContent>
                 <p className="text-muted-foreground">Integrating AI models to create smart, helpful features.</p>
               </CardContent>
-            </Card>
+            </card>
           </div>
         </section>
       </div>
