@@ -1,4 +1,4 @@
-import { CircuitBoard, Cpu, GraduationCap, Lightbulb, Projector, Bot, Thermometer, Gauge, Waves, Move3d, HardDrive, Book, GitBranch, Share2, Binary, Power, Display, SlidersHorizontal, Sun, Sound, RadioReceiver, Magnet, Fingerprint, Fuel, Cable } from 'lucide-react';
+import { CircuitBoard, Cpu, GraduationCap, Lightbulb, Projector, Bot, Thermometer, Gauge, Waves, Move3d, HardDrive, Book, GitBranch, Share2, Binary, Power, Monitor, SlidersHorizontal, Sun, Volume2, RadioReceiver, Magnet, Fingerprint, Fuel, Cable } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export type LibraryItem = {
@@ -404,7 +404,7 @@ void loop() {
     title: 'LED Displays',
     description: 'Use 7-segment and other LED displays.',
     slug: 'led-displays',
-    icon: Display,
+    icon: Monitor,
     code: `// Example for a 7-segment display (common anode)
 // A=2, B=3, C=4, D=5, E=6, F=7, G=8
 // This code is simplified and doesn't use a library.
@@ -498,7 +498,7 @@ void loop() {
     title: 'Sound Modules',
     description: 'Detect sound with microphone modules.',
     slug: 'sound-modules',
-    icon: Sound,
+    icon: Volume2,
     code: `const int soundSensorPin = A0;
 const int ledPin = 13;
 const int threshold = 500;
