@@ -1,4 +1,4 @@
 import { config } from 'dotenv';
 config();
 
-import '@/ai/flows/ai-suggest-code-examples.ts';
+import '@/ai/flows/ai-generate-code.ts';

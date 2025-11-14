@@ -1,19 +1,21 @@
 "use client";
 
-import { useActionState, useEffect, useRef, useState } from "react";
-import { Bot, Loader, Sparkles, Wand2 } from "lucide-react";
+import { useActionState, useEffect, useRef } from "react";
+import { Bot, Loader, Sparkles } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
-import { getAiSuggestions } from "@/app/actions";
+import { getAiGeneratedCode } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "./ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { AnimatePresence, motion } from "framer-motion";
+import { CodeDisplay } from "./code-display";
 
 const initialState = {
-  suggestions: undefined,
+  code: undefined,
+  description: undefined,
   error: null,
 };
 
@@ -24,12 +26,12 @@ function SubmitButton() {
       {pending ? (
         <>
           <Loader className="mr-2 h-4 w-4 animate-spin" />
-          Thinking...
+          Generating...
         </>
       ) : (
         <>
           <Sparkles className="mr-2 h-4 w-4" />
-          Get Suggestions
+          Generate Code
         </>
       )}
     </Button>
@@ -37,8 +39,7 @@ function SubmitButton() {
 }
 
 export function AiSuggestionTool() {
-  const [state, formAction] = useActionState(getAiSuggestions, initialState);
-  const [history, setHistory] = useState<string[]>([]);
+  const [state, formAction] = useActionState(getAiGeneratedCode, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -53,12 +54,10 @@ export function AiSuggestionTool() {
   }, [state.error, state.timestamp, toast]);
 
   useEffect(() => {
-    if (state.suggestions && state.suggestions.length > 0) {
-      setHistory(prev => [...prev, ...state.suggestions!]);
+    if (state.code) {
       formRef.current?.reset();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.suggestions, state.timestamp]);
+  }, [state.code, state.timestamp]);
 
   return (
     <Card className="max-w-3xl mx-auto shadow-lg">
@@ -68,20 +67,19 @@ export function AiSuggestionTool() {
                 <Bot className="w-8 h-8 text-primary" />
             </div>
             <div>
-                <CardTitle className="font-headline text-2xl">AI Example Finder</CardTitle>
-                <CardDescription>Describe your project, and I'll suggest some code examples to get you started.</CardDescription>
+                <CardTitle className="font-headline text-2xl">AI Code Generator</CardTitle>
+                <CardDescription>Describe your project, and I'll write the Arduino sketch for you.</CardDescription>
             </div>
         </div>
       </CardHeader>
       <form action={formAction} ref={formRef}>
         <CardContent>
-          <input type="hidden" name="history" value={JSON.stringify(history)} />
           <div className="grid w-full gap-2">
             <Label htmlFor="description" className="sr-only">Project Description</Label>
             <Textarea
               id="description"
               name="description"
-              placeholder="e.g., 'I want to build a weather station that shows temperature on an LCD screen'"
+              placeholder="e.g., 'A program that blinks an LED on pin 13 every half second.'"
               required
               minLength={10}
               className="min-h-[100px] text-base"
@@ -93,27 +91,25 @@ export function AiSuggestionTool() {
           <SubmitButton />
         </CardFooter>
       </form>
-      {state.suggestions && state.suggestions.length > 0 && (
-        <CardContent>
-            <h3 className="font-headline text-lg mb-4 text-foreground">Here are some ideas:</h3>
-            <div className="space-y-3">
-              <AnimatePresence>
-                {state.suggestions.map((suggestion, index) => (
-                  <motion.div
-                    key={`${state.timestamp}-${index}`}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    className="flex items-start gap-3 p-3 bg-background rounded-lg border"
-                  >
-                    <Wand2 className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
-                    <p className="text-muted-foreground">{suggestion}</p>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-        </CardContent>
-      )}
+      
+      <AnimatePresence>
+        {state.code && (
+            <motion.div
+                key={state.timestamp}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <CardContent>
+                    <h3 className="font-headline text-lg mb-2 text-foreground">Generated Code:</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                        Here is the Arduino sketch I generated for: "{state.description}"
+                    </p>
+                    <CodeDisplay code={state.code} title="Generated Arduino Sketch" />
+                </CardContent>
+            </motion.div>
+        )}
+      </AnimatePresence>
     </Card>
   );
 }

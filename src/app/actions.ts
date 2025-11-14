@@ -1,23 +1,22 @@
 "use server";
 
-import { suggestCodeExamples } from "@/ai/flows/ai-suggest-code-examples";
+import { generateCode } from "@/ai/flows/ai-generate-code";
 import { z } from "zod";
 
-const SuggestionSchema = z.object({
+const GenerationSchema = z.object({
   description: z.string().min(10, { message: "Please describe your project in at least 10 characters." }),
-  history: z.string().optional(),
 });
 
 type State = {
-  suggestions?: string[];
+  code?: string;
+  description?: string;
   error?: string | null;
   timestamp?: number;
 };
 
-export async function getAiSuggestions(prevState: State, formData: FormData): Promise<State> {
-  const validatedFields = SuggestionSchema.safeParse({
+export async function getAiGeneratedCode(prevState: State, formData: FormData): Promise<State> {
+  const validatedFields = GenerationSchema.safeParse({
     description: formData.get("description"),
-    history: formData.get("history"),
   });
 
   if (!validatedFields.success) {
@@ -26,15 +25,12 @@ export async function getAiSuggestions(prevState: State, formData: FormData): Pr
     };
   }
 
-  const { description, history } = validatedFields.data;
+  const { description } = validatedFields.data;
 
   try {
-    const result = await suggestCodeExamples({
-      description,
-      exampleDetails: history,
-    });
-    return { suggestions: result.suggestions, timestamp: Date.now() };
+    const result = await generateCode({ description });
+    return { code: result.code, description, timestamp: Date.now() };
   } catch (e) {
-    return { error: "Our AI is busy, please try again in a moment." };
+    return { error: "Our AI is busy, please try again in a moment.", description };
   }
 }
