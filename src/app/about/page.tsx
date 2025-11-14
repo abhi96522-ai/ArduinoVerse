@@ -83,7 +83,7 @@ export default function AboutPage() {
               <CardContent>
                 <p className="text-muted-foreground">Integrating AI models to create smart, helpful features.</p>
               </CardContent>
-            </card>
+            </Card>
           </div>
         </section>
       </div>
