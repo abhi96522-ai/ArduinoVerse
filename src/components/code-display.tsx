@@ -24,17 +24,19 @@ const arduinoTypes = [
 ];
 
 const highlightSyntax = (code: string) => {
-  return code
+  const escapedCode = code
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+    .replace(/'/g, '&#039;');
+
+  return escapedCode
     .replace(/\b(\d+)\b/g, '<span class="text-amber-300">$1</span>') // Numbers
     .replace(/(\/\/.*$)/gm, '<span class="text-green-400">$1</span>') // Single line comments
     .replace(/(\/\*[\s\S]*?\*\/)/gm, '<span class="text-green-400">$1</span>') // Multi-line comments
-    .replace(/"(.*?)"/g, '<span class="text-amber-300">"$1"</span>') // Strings
-    .replace(/'(.*?)'/g, "<span class=\"text-amber-300\">'$1'</span>") // Chars
+    .replace(/&quot;(.*?)&quot;/g, '<span class="text-amber-300">"S1"</span>') // Strings
+    .replace(/&#039;(.*?)&#039;/g, "<span class=\"text-amber-300\">'S1'</span>") // Chars
     .replace(new RegExp(`\\b(${arduinoKeywords.join('|')})\\b`, 'g'), '<span class="text-purple-400">$1</span>') // Keywords
     .replace(new RegExp(`\\b(${arduinoTypes.join('|')})\\b`, 'g'), '<span class="text-sky-400">$1</span>') // Types
     .replace(/([a-zA-Z_]\w*)\s*\(/g, (match, p1) => { // Functions
