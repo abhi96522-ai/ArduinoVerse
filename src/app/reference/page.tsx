@@ -12,7 +12,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar';
-import { Code, FunctionSquare, Pilcrow, Type, Hash, PlusSlash, Sigma, Braces, Binary, GanttChartSquare, GitCompareArrows, Equal, Pointer, Repeat } from 'lucide-react';
+import { Code, FunctionSquare, Pilcrow, Type, Hash, Sigma, Binary, GanttChartSquare, GitCompareArrows, Equal, Pointer, Repeat } from 'lucide-react';
 import { CodeDisplay } from '@/components/code-display';
 
 const REFERENCE_DATA = {
@@ -193,7 +193,7 @@ void setup() {
   },
   arithmeticOperators: {
     title: 'Arithmetic Operators',
-    icon: PlusSlash,
+    icon: Sigma,
     items: {
       'assignment': {
         title: '= (assignment)',
