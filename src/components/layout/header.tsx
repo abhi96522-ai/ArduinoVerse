@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Bot } from "lucide-react";
+import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AppIcon } from "@/app/icon";
 import { CATEGORIES } from "@/lib/data";
@@ -31,7 +31,7 @@ export default function Header() {
                 href={link.href}
                 className={cn(
                   "transition-colors hover:text-primary",
-                  pathname === link.href ? "text-primary" : "text-muted-foreground"
+                  pathname.startsWith(link.href) ? "text-primary" : "text-muted-foreground"
                 )}
               >
                 {link.name}
@@ -65,7 +65,7 @@ export default function Header() {
                     href={link.href}
                     className={cn(
                       "transition-colors hover:text-primary p-2 rounded-md",
-                      pathname === link.href ? "bg-secondary text-primary" : "text-muted-foreground"
+                      pathname.startsWith(link.href) ? "bg-secondary text-primary" : "text-muted-foreground"
                     )}
                   >
                     {link.name}

@@ -375,6 +375,35 @@ void setColor(int red, int green, int blue) {
   analogWrite(bluePin, blue);
 }`
   },
+  {
+    title: 'PIR Motion Sensor (HC-SR501)',
+    description: 'Detect movement with a Passive Infrared (PIR) sensor.',
+    slug: 'pir-sensor',
+    icon: Move3d,
+    code: `const int pirPin = 2; // Connect PIR OUT to Digital Pin 2
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pirPin, INPUT); // Set the pin as an input
+  Serial.println("PIR Sensor Ready.");
+}
+
+void loop() {
+  // Read the state of the pin
+  int motionState = digitalRead(pirPin); 
+
+  if (motionState == HIGH) {
+    // Pin is HIGH when motion is detected
+    Serial.println(">>> Motion Detected! <<<");
+  } else {
+    // Pin is LOW when no motion
+    Serial.println("No Motion.");
+  }
+  
+  // A small delay to keep the serial monitor readable
+  delay(500); 
+}`
+  },
 ]
 
 export const LEARNING: LibraryItem[] = [
