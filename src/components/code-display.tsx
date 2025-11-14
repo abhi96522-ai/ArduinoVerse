@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -30,8 +31,8 @@ const highlightSyntax = (code: string) => {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;')
     .replace(/\b(\d+)\b/g, '<span class="text-amber-300">$1</span>') // Numbers
-    .replace(/(\/\/.*$)/gm, '<span class="text-green-400/70">$1</span>') // Single line comments
-    .replace(/(\/\*[\s\S]*?\*\/)/gm, '<span class="text-green-400/70">$1</span>') // Multi-line comments
+    .replace(/(\/\/.*$)/gm, '<span class="text-green-400">$1</span>') // Single line comments
+    .replace(/(\/\*[\s\S]*?\*\/)/gm, '<span class="text-green-400">$1</span>') // Multi-line comments
     .replace(/"(.*?)"/g, '<span class="text-amber-300">"$1"</span>') // Strings
     .replace(/'(.*?)'/g, "<span class=\"text-amber-300\">'$1'</span>") // Chars
     .replace(new RegExp(`\\b(${arduinoKeywords.join('|')})\\b`, 'g'), '<span class="text-purple-400">$1</span>') // Keywords
