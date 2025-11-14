@@ -1,4 +1,4 @@
-import { CircuitBoard, Cpu, GraduationCap, Lightbulb, Projector, Bot, Thermometer, Gauge, Waves, Move3d, HardDrive, Book, GitBranch, Share2, Binary, Power, Monitor, SlidersHorizontal, Sun, Volume2, RadioReceiver, Magnet, Fingerprint, Fuel, Cable } from 'lucide-react';
+import { CircuitBoard, Cpu, GraduationCap, Lightbulb, Projector, Bot, Thermometer, Gauge, Waves, Move3d, HardDrive, Book, GitBranch, Share2, Binary, Power, Monitor, SlidersHorizontal, Sun, Volume2, RadioReceiver, Magnet, Fingerprint, Fuel, Cable, Globe, GitCommitVertical } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export type LibraryItem = {
@@ -62,7 +62,7 @@ void loop() {
 
   Serial.print("Humidity: ");
   Serial.print(h);
-  Serial.print("%\t");
+  Serial.print("%\\t");
   Serial.print("Temperature: ");
   Serial.print(t);
   Serial.println(" *C");
@@ -73,32 +73,42 @@ void loop() {
     description: 'Measure distance with the HC-SR04 ultrasonic sensor.',
     slug: 'hc-sr04',
     icon: Waves,
-    code: `#define echoPin 2
-#define trigPin 3
+    code: `const int trigPin = 9;
+const int echoPin = 10;
 
-long duration;
-int distance;
+// Variables to store duration and distance
+long duration; 
+int distanceCm; 
 
 void setup() {
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
   Serial.begin(9600);
+  pinMode(trigPin, OUTPUT); // Trig pin as output
+  pinMode(echoPin, INPUT);  // Echo pin as input
+  Serial.println("HC-SR04 Distance Sensor Ready.");
 }
 
 void loop() {
+  // 1. Clear the trigPin by setting it LOW for a moment
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
+  
+  // 2. Send a 10-microsecond pulse to start the measurement
   digitalWrite(trigPin, HIGH);
   delayMicroseconds(10);
   digitalWrite(trigPin, LOW);
-
+  
+  // 3. Read the echo pin: returns the duration of the sound travel time
   duration = pulseIn(echoPin, HIGH);
-  distance = duration * 0.034 / 2;
-
+  
+  // 4. Calculate the distance (speed of sound: 343 m/s or 29 µs/cm)
+  // Distance = (Time * Speed of Sound) / 2 (because it's a round trip)
+  distanceCm = duration * 0.0343 / 2;
+  
   Serial.print("Distance: ");
-  Serial.print(distance);
+  Serial.print(distanceCm);
   Serial.println(" cm");
-  delay(100);
+  
+  delay(500);
 }`
   },
   {
@@ -120,26 +130,147 @@ void loop() {
 }`
   },
   {
-    title: 'PIR Motion Sensor',
+    title: 'PIR Motion Sensor (HC-SR501)',
     description: 'Detect movement with a Passive Infrared (PIR) sensor.',
     slug: 'pir-sensor',
     icon: Move3d,
-    code: `int pirPin = 2;
+    code: `const int pirPin = 2; // Connect PIR OUT to Digital Pin 2
 
 void setup() {
-  pinMode(pirPin, INPUT);
   Serial.begin(9600);
-  Serial.println("PIR Motion Sensor Test");
+  pinMode(pirPin, INPUT); // Set the pin as an input
+  Serial.println("PIR Sensor Ready.");
 }
 
 void loop() {
-  int pirState = digitalRead(pirPin);
-  if (pirState == HIGH) {
-    Serial.println("Motion detected!");
+  // Read the state of the pin
+  int motionState = digitalRead(pirPin); 
+
+  if (motionState == HIGH) {
+    // Pin is HIGH when motion is detected
+    Serial.println(">>> Motion Detected! <<<");
+  } else {
+    // Pin is LOW when no motion
+    Serial.println("No Motion.");
   }
-  delay(1000);
+  
+  // A small delay to keep the serial monitor readable
+  delay(500); 
 }`
   },
+  {
+    title: 'Accelerometer/Gyroscope (MPU6050)',
+    description: 'Measure acceleration and rotation with the MPU6050 sensor using I2C.',
+    slug: 'mpu6050',
+    icon: Move3d,
+    code: `// MPU6050 Accelerometer/Gyroscope Code (I2C)
+
+// 1. Include required libraries
+#include <Wire.h> // I2C communication library
+#include <Adafruit_MPU6050.h> // MPU6050 library
+#include <Adafruit_Sensor.h>  // Base sensor library
+
+Adafruit_MPU6050 mpu;
+
+void setup() {
+  Serial.begin(115200); // Use a faster baud rate for I2C data
+  Wire.begin(); // Initialize I2C bus
+
+  if (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip! Check wiring.");
+    while (1) { delay(10); }
+  }
+  Serial.println("MPU6050 Found and Ready!");
+}
+
+void loop() {
+  // Create a structure to hold the sensor data
+  sensors_event_t a, g, temp;
+  mpu.getEvent(&a, &g, &temp);
+
+  /* Print out the data */
+  Serial.print("Accel X: ");
+  Serial.print(a.acceleration.x);
+  Serial.print(" Y: ");
+  Serial.print(a.acceleration.y);
+  Serial.print(" Z: ");
+  Serial.print(a.acceleration.z);
+  Serial.println(" m/s^2");
+
+  Serial.print("Gyro X: ");
+  Serial.print(g.gyro.x);
+  Serial.print(" Y: ");
+  Serial.print(g.gyro.y);
+  Serial.print(" Z: ");
+  Serial.print(g.gyro.z);
+  Serial.println(" rad/s");
+  
+  Serial.println("---");
+  delay(100);
+}`
+  },
+  {
+    title: 'GPS Module (NEO-6M)',
+    description: 'Read raw NMEA data from a GPS module using SoftwareSerial.',
+    slug: 'gps-neo-6m',
+    icon: Globe,
+    code: `// GPS Module (NEO-6M) Code using SoftwareSerial
+
+#include <SoftwareSerial.h>
+
+// Define the pins for the software serial port (RX/TX)
+// GPS TX goes to Arduino RX (pin 10)
+// GPS RX goes to Arduino TX (pin 11)
+SoftwareSerial gpsSerial(10, 11); 
+
+void setup() {
+  Serial.begin(9600); // For debugging output to PC
+  gpsSerial.begin(9600); // For communication with the GPS module
+  Serial.println("GPS Module Ready. Waiting for data...");
+}
+
+void loop() {
+  // Read and relay raw GPS data (NMEA sentences) to the PC
+  while (gpsSerial.available()) {
+    char c = gpsSerial.read();
+    Serial.write(c);
+  }
+}
+
+// NOTE: For practical use, you'd integrate a library like 'TinyGPSPlus' 
+// to parse this raw data into readable latitude/longitude.`
+  },
+  {
+    title: 'Tilt Sensor / Reed Switch',
+    description: 'Use a simple digital input sensor like a tilt switch or magnetic reed switch.',
+    slug: 'tilt-reed-switch',
+    icon: GitCommitVertical,
+    code: `// Tilt Sensor or Reed Switch Code (Digital Input)
+
+const int sensorPin = 2; // Connect to Digital Pin 2 (with a pull-up or pull-down resistor if needed)
+
+void setup() {
+  Serial.begin(9600);
+  // Using INPUT_PULLUP is common to simplify wiring for simple switches
+  // It uses the Arduino's internal pull-up resistor. The pin will be LOW when triggered.
+  pinMode(sensorPin, INPUT_PULLUP); 
+  Serial.println("Tilt/Reed Switch Sensor Ready.");
+}
+
+void loop() {
+  int sensorState = digitalRead(sensorPin); 
+
+  if (sensorState == LOW) {
+    // LOW means the switch is closed (for INPUT_PULLUP mode)
+    Serial.println("Sensor Triggered (Tilt/Magnet Detected)!");
+  } else {
+    // HIGH means the switch is open
+    Serial.println("Sensor Open.");
+  }
+  
+  delay(200); 
+}`
+  }
 ];
 
 export const OUTPUTS: LibraryItem[] = [
