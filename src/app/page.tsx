@@ -23,8 +23,8 @@ export default function Home() {
 
       <section>
         <h2 className="text-3xl font-bold font-headline text-center mb-8">Explore Categories</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {CATEGORIES.map((category) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {CATEGORIES.filter(cat => cat.href !== '/about').map((category) => (
             <Card key={category.title} className="bg-card hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-xl">
               <CardHeader className="flex flex-row items-center gap-4">
                 <div className="bg-primary/10 p-3 rounded-full">

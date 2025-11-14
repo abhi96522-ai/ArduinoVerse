@@ -1,4 +1,4 @@
-import { CircuitBoard, Cpu, GraduationCap, Lightbulb, Projector, Bot, Thermometer, Gauge, Waves, Move3d, HardDrive, Book, GitBranch, Share2, Binary, Power, Monitor, SlidersHorizontal, Sun, Volume2, RadioReceiver, Magnet, Fingerprint, Fuel, Cable, Globe, GitCommitVertical, Pilcrow, Hash, Sigma, GitCompareArrows, Equal, Pointer, Repeat, Mouse, Joystick, Keyboard, Text, Rows, IterationCw, CaseLower, CaseUpper, Replace, Code, ArrowRightLeft, Radio, BetweenHorizontalStart, BetweenHorizontalEnd, Baseline, FileJson, SquareCode, Braces, FunctionSquare, Type, FileTerminal, Minus, Plus } from 'lucide-react';
+import { CircuitBoard, Cpu, GraduationCap, Lightbulb, Projector, Bot, Thermometer, Gauge, Waves, Move3d, HardDrive, Book, GitBranch, Share2, Binary, Power, Monitor, SlidersHorizontal, Sun, Volume2, RadioReceiver, Magnet, Fingerprint, Fuel, Cable, Globe, GitCommitVertical, Pilcrow, Hash, Sigma, GitCompareArrows, Equal, Pointer, Repeat, Mouse, Joystick, Keyboard, Text, Rows, IterationCw, CaseLower, CaseUpper, Replace, Code, ArrowRightLeft, Radio, BetweenHorizontalStart, BetweenHorizontalEnd, Baseline, FileJson, SquareCode, Braces, FunctionSquare, Type, FileTerminal, Minus, Plus, User } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 export type LibraryItem = {
@@ -34,6 +34,12 @@ export const CATEGORIES = [
     description: 'Quick reference for core concepts and functions.',
     href: '/reference',
     icon: GitBranch,
+  },
+  {
+    title: 'About',
+    description: 'Learn more about the creator of ArduinoVerse.',
+    href: '/about',
+    icon: User,
   },
 ];
 
@@ -2210,80 +2216,6 @@ void loop() {
   }
 }`
   },
-  {
-    title: 'Arduino Reference',
-    description: 'A reference for core programming concepts like variables, data structures, and functions.',
-    slug: 'arduino-reference',
-    icon: GitBranch,
-    category: 'Reference',
-    code: `// --- Variables ---
-// Variables are used to store data.
-int integerVar = 123;          // Stores whole numbers
-float floatVar = 3.14;         // Stores numbers with decimal points
-char charVar = 'A';            // Stores a single character
-String stringVar = "Hello!";   // Stores a sequence of characters (text)
-bool boolVar = true;           // Stores true or false
-
-// --- Structures ---
-// Structures (structs) group related variables into one place.
-struct SensorReading {
-  int id;
-  float temperature;
-  float humidity;
-  bool isValid;
-};
-
-// Create an instance of the structure
-SensorReading myReading;
-
-// --- Functions ---
-// Functions are reusable blocks of code that perform a specific task.
-
-// This function takes two integers as input and returns their sum.
-int add(int a, int b) {
-  return a + b;
-}
-
-// This function does not return a value (void). It prints sensor data.
-void printReading(SensorReading reading) {
-  Serial.print("Reading ID: ");
-  Serial.println(reading.id);
-  if (reading.isValid) {
-    Serial.print("  Temp: ");
-    Serial.print(reading.temperature);
-    Serial.println(" C");
-    Serial.print("  Humidity: ");
-    Serial.print(reading.humidity);
-    Serial.println("%");
-  } else {
-    Serial.println("  (Invalid Reading)");
-  }
-}
-
-void setup() {
-  Serial.begin(9600);
-  
-  // Using the function
-  int result = add(5, 10);
-  Serial.print("5 + 10 = ");
-  Serial.println(result);
-  
-  Serial.println("---");
-
-  // Using the structure
-  myReading.id = 1;
-  myReading.temperature = 25.5;
-  myReading.humidity = 45.8;
-  myReading.isValid = true;
-  
-  // Using the function to print the struct data
-  printReading(myReading);
-}
-
-void loop() {
-  // The main loop is empty as this is a reference example.
-}`
-  }
 ];
 
 // Group learning items by category
@@ -2306,7 +2238,6 @@ const categoryIcons: Record<string, LucideIcon> = {
     'Display': Monitor,
     'Strings': Text,
     'USB': Cable,
-    'Reference': Book,
 };
 
 export const LEARNING_CATEGORIES = Object.keys(learningGroups).map(category => ({
