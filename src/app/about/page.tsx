@@ -1,3 +1,4 @@
+
 import { Github, Linkedin, Mail, User } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,13 +22,13 @@ export default function AboutPage() {
           <CardContent className="p-6 md:p-8">
             <div className="flex flex-col md:flex-row items-center gap-8">
               <Avatar className="w-32 h-32 md:w-48 md:h-48 border-4 border-primary">
-                <AvatarImage src="https://picsum.photos/seed/avatar/200/200" alt="Your Name" data-ai-hint="professional portrait" />
+                <AvatarImage src="https://picsum.photos/seed/avatar/200/200" alt="ABHINAV GURIJALA" data-ai-hint="professional portrait" />
                 <AvatarFallback>
                   <User className="w-16 h-16" />
                 </AvatarFallback>
               </Avatar>
               <div className="text-center md:text-left">
-                <h2 className="text-3xl font-bold font-headline">Your Name</h2>
+                <h2 className="text-3xl font-bold font-headline">ABHINAV GURIJALA</h2>
                 <p className="text-xl text-muted-foreground mt-1">
                   Arduino Enthusiast & Software Developer
                 </p>
