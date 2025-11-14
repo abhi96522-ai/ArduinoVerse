@@ -28,6 +28,12 @@ export const CATEGORIES = [
     href: '/learning',
     icon: GraduationCap,
   },
+  {
+    title: 'Arduino Reference',
+    description: 'Quick reference for core concepts and functions.',
+    href: '/reference',
+    icon: GitBranch,
+  },
 ];
 
 export const SENSORS: LibraryItem[] = [
@@ -419,79 +425,6 @@ int calculateSum(int arr[], int size) {
 }`
   },
   {
-    title: 'Arduino Reference: Variables, Structures & Functions',
-    description: 'A reference for core programming concepts like variables, data structures, and functions.',
-    slug: 'arduino-reference',
-    icon: GitBranch,
-    code: `// --- Variables ---
-// Variables are used to store data.
-int integerVar = 123;          // Stores whole numbers
-float floatVar = 3.14;         // Stores numbers with decimal points
-char charVar = 'A';            // Stores a single character
-String stringVar = "Hello!";   // Stores a sequence of characters (text)
-bool boolVar = true;           // Stores true or false
-
-// --- Structures ---
-// Structures (structs) group related variables into one place.
-struct SensorReading {
-  int id;
-  float temperature;
-  float humidity;
-  bool isValid;
-};
-
-// Create an instance of the structure
-SensorReading myReading;
-
-// --- Functions ---
-// Functions are reusable blocks of code that perform a specific task.
-
-// This function takes two integers as input and returns their sum.
-int add(int a, int b) {
-  return a + b;
-}
-
-// This function does not return a value (void). It prints sensor data.
-void printReading(SensorReading reading) {
-  Serial.print("Reading ID: ");
-  Serial.println(reading.id);
-  if (reading.isValid) {
-    Serial.print("  Temp: ");
-    Serial.print(reading.temperature);
-    Serial.println(" C");
-    Serial.print("  Humidity: ");
-    Serial.print(reading.humidity);
-    Serial.println("%");
-  } else {
-    Serial.println("  (Invalid Reading)");
-  }
-}
-
-void setup() {
-  Serial.begin(9600);
-  
-  // Using the function
-  int result = add(5, 10);
-  Serial.print("5 + 10 = ");
-  Serial.println(result);
-  
-  Serial.println("---");
-
-  // Using the structure
-  myReading.id = 1;
-  myReading.temperature = 25.5;
-  myReading.humidity = 45.8;
-  myReading.isValid = true;
-  
-  // Using the function to print the struct data
-  printReading(myReading);
-}
-
-void loop() {
-  // The main loop is empty as this is a reference example.
-}`
-  },
-  {
     title: 'Serial Port',
     description: 'Communicate between your Arduino and a computer.',
     slug: 'serial-port',
@@ -858,3 +791,78 @@ void loop() {
   }
 ];
 
+export const REFERENCE: LibraryItem[] = [
+    {
+    title: 'Arduino Reference: Variables, Structures & Functions',
+    description: 'A reference for core programming concepts like variables, data structures, and functions.',
+    slug: 'arduino-reference',
+    icon: GitBranch,
+    code: `// --- Variables ---
+// Variables are used to store data.
+int integerVar = 123;          // Stores whole numbers
+float floatVar = 3.14;         // Stores numbers with decimal points
+char charVar = 'A';            // Stores a single character
+String stringVar = "Hello!";   // Stores a sequence of characters (text)
+bool boolVar = true;           // Stores true or false
+
+// --- Structures ---
+// Structures (structs) group related variables into one place.
+struct SensorReading {
+  int id;
+  float temperature;
+  float humidity;
+  bool isValid;
+};
+
+// Create an instance of the structure
+SensorReading myReading;
+
+// --- Functions ---
+// Functions are reusable blocks of code that perform a specific task.
+
+// This function takes two integers as input and returns their sum.
+int add(int a, int b) {
+  return a + b;
+}
+
+// This function does not return a value (void). It prints sensor data.
+void printReading(SensorReading reading) {
+  Serial.print("Reading ID: ");
+  Serial.println(reading.id);
+  if (reading.isValid) {
+    Serial.print("  Temp: ");
+    Serial.print(reading.temperature);
+    Serial.println(" C");
+    Serial.print("  Humidity: ");
+    Serial.print(reading.humidity);
+    Serial.println("%");
+  } else {
+    Serial.println("  (Invalid Reading)");
+  }
+}
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Using the function
+  int result = add(5, 10);
+  Serial.print("5 + 10 = ");
+  Serial.println(result);
+  
+  Serial.println("---");
+
+  // Using the structure
+  myReading.id = 1;
+  myReading.temperature = 25.5;
+  myReading.humidity = 45.8;
+  myReading.isValid = true;
+  
+  // Using the function to print the struct data
+  printReading(myReading);
+}
+
+void loop() {
+  // The main loop is empty as this is a reference example.
+}`
+  }
+];
