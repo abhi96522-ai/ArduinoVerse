@@ -6,7 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AppIcon } from "@/app/icon";
+import Icon from "@/app/icon";
 import { CATEGORIES } from "@/lib/data";
 
 const navLinks = CATEGORIES.map(cat => ({ name: cat.title, href: cat.href }));
@@ -19,7 +19,7 @@ export default function Header() {
       <div className="container flex h-14 items-center">
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
-            <AppIcon className="h-6 w-6 text-primary" />
+            <Icon className="h-6 w-6 text-primary" />
             <span className="hidden font-bold sm:inline-block font-headline">
               ArduinoVerse
             </span>
@@ -55,7 +55,7 @@ export default function Header() {
           <SheetContent side="left">
             <div className="flex flex-col space-y-4">
               <Link href="/" className="flex items-center space-x-2">
-                <AppIcon className="h-6 w-6 text-primary" />
+                <Icon className="h-6 w-6 text-primary" />
                 <span className="font-bold font-headline">ArduinoVerse</span>
               </Link>
               <nav className="flex flex-col space-y-2">
